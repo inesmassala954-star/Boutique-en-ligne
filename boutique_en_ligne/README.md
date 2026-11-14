@@ -1,93 +1,77 @@
-# projetDevWeb
+# Boutique en ligne
 
+Ce projet est une petite boutique de démonstration réalisée en HTML, CSS et JavaScript natif. Elle affiche un catalogue de produits, permet de composer un panier et conserve son contenu dans le stockage local du navigateur.
 
+## Fonctionnalités
 
-## Getting started
+- Affichage des produits du catalogue avec leur nom, leur description, leur image et leur prix en euros.
+- Recherche des produits par nom.
+- Saisie et contrôle d'une quantité, puis ajout au panier.
+- Retrait d'un produit du panier et mise à jour automatique du total.
+- Restauration du panier après rechargement de la page grâce à `localStorage`.
+- Deux catalogues d'exemple : des peluches et des chaises.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Lancer le projet
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Aucune installation ni compilation n'est nécessaire : le projet utilise les fonctionnalités natives du navigateur.
 
-## Add your files
+1. Ouvrir `mini-projet-js-2026.html` dans un navigateur.
+2. Si le navigateur restreint certaines fonctionnalités en ouvrant directement le fichier, servir le dossier avec un serveur HTTP local statique, puis ouvrir la page à l'adresse indiquée par ce serveur.
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+Le fichier HTML charge les styles, le catalogue sélectionné et le script de la boutique. Il n'y a pas de serveur applicatif ni de procédure de déploiement configurés dans le dépôt.
 
+## Utiliser un autre catalogue
+
+Par défaut, `mini-projet-js-2026.html` charge `data/catalog1.js` :
+
+```html
+<script src="./data/catalog1.js"></script>
+<!-- <script src="data/catalog2.js"></script> -->
 ```
-cd existing_repo
-git remote add origin https://gitlab.univ-lille.fr/flora.sylveira.etu/projetdevweb.git
-git branch -M main
-git push -uf origin main
+
+Pour afficher les chaises, commenter la première ligne de script et décommenter la seconde. Il faut charger un seul catalogue à la fois, car chacun déclare la variable globale `catalog`.
+
+## Organisation des fichiers
+
+```text
+mini-projet-js-2026.html  Page principale et choix du catalogue
+data/
+  catalog1.js            Catalogue de peluches
+  catalog2.js            Catalogue de chaises
+images/                  Images utilisées par les catalogues
+scripts/
+  projet2026.js           Affichage, recherche et gestion du panier
+style/
+  style-projet2026.css    Mise en page générale
+  boutique.css           Styles des produits, contrôles et panier
 ```
 
-## Integrate with your tools
+Les chemins d'images sont définis relativement au dossier du projet, par exemple `images/nounours1.jpg`.
 
-* [Set up project integrations](https://gitlab.univ-lille.fr/flora.sylveira.etu/projetdevweb/-/settings/integrations)
+## Format d'un produit
 
-## Collaborate with your team
+Chaque fichier de catalogue définit un tableau global nommé `catalog`. Un produit contient les propriétés suivantes :
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+```js
+{
+  name: "Nounours marron",
+  description: "Un joli nounours marron avec un foulard",
+  image: "images/nounours1.jpg",
+  price: 35
+}
+```
 
-## Test and Deploy
+Pour ajouter un produit, ajouter un objet au tableau et vérifier que le chemin de son image existe. La propriété `qty` présente dans le premier catalogue n'est pas utilisée pour limiter les commandes dans le script actuel.
 
-Use the built-in continuous integration in GitLab.
+## Fonctionnement du panier
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+Le script `scripts/projet2026.js` crée les éléments de la boutique à partir de `catalog`, gère les contrôles de quantité, les ajouts et les retraits, puis recalcule le total. La recherche masque les produits dont le nom ne contient pas le texte saisi.
 
-***
+Le panier est enregistré dans `localStorage` sous la clé `cart`. Il est donc propre au navigateur et au profil utilisés ; il n'est pas partagé entre appareils et peut être effacé en supprimant les données du site dans le navigateur.
 
-# Editing this README
+## Limites actuelles
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- Il s'agit d'une démonstration côté navigateur : aucun compte, paiement, envoi de commande ou stockage serveur n'est implémenté.
+- Les quantités en stock des catalogues ne sont pas consultées.
+- La quantité saisie pour une commande est ramenée à zéro à partir de `MAX_QTY` (9), tandis que la quantité cumulée d'une ligne de panier est plafonnée à 9.
+- Aucun script de tests, linter ou outil de build n'est fourni.

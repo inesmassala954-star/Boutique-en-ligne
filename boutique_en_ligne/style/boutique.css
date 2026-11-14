@@ -9,3 +9,322 @@ div#panier {
     padding: 20px;            /* pour que ce soit plus joli */
     border-radius: 8px;       /* optionnel mais pour arrondir un peut les bords */
 }
+
+:root {
+    --ink: #20302e;
+    --muted: #64736f;
+    --page: #eef2f0;
+    --surface: #ffffff;
+    --line: #d9e2de;
+    --accent: #176b58;
+    --accent-soft: #e7f2ee;
+    --price: #bd4d43;
+    --shadow: 0 12px 32px rgba(32, 48, 46, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-areas:
+        "title title"
+        "shop cart";
+    align-items: start;
+    gap: 18px;
+    width: min(1240px, calc(100% - 40px));
+    margin: 28px auto;
+    padding: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: "Segoe UI", sans-serif;
+}
+
+h1 {
+    grid-area: title;
+    width: auto;
+    margin: 0;
+    padding: 0 0 8px;
+    border-bottom: 2px solid var(--accent);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px;
+    text-align: left;
+}
+
+div#boutique,
+div#panier {
+    height: min(72vh, 760px);
+    min-height: 540px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+div#boutique {
+    grid-area: shop;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-content: start;
+    gap: 12px;
+    width: auto;
+}
+
+div#panier {
+    grid-area: cart;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    text-align: left;
+}
+
+div.produit {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: 258px;
+    min-width: 0;
+    margin: 0;
+    padding: 11px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 3px 12px rgba(32, 48, 46, 0.06);
+    text-align: left;
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+div.produit:hover {
+    transform: translateY(-2px);
+    border-color: #9abdb0;
+    box-shadow: 0 8px 18px rgba(32, 48, 46, 0.1);
+}
+
+div.produit h4 {
+    min-height: 32px;
+    margin: 0;
+    padding: 0 58px 4px 0;
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+div.produit figure {
+    display: grid;
+    place-items: center;
+    flex: 1;
+    width: 100%;
+    height: auto;
+    min-height: 112px;
+    margin: 4px 0 8px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #f5f8f6;
+    box-shadow: none;
+}
+
+div.produit figure img {
+    width: 100%;
+    height: 100%;
+    max-height: 128px;
+    margin: 0;
+    object-fit: contain;
+}
+
+div.produit div.description {
+    width: auto;
+    height: 31px;
+    margin: 0 0 7px;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
+    box-shadow: none;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+div.produit div.prix {
+    top: 10px;
+    right: 10px;
+    border-radius: 5px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+div.prix:after, #montant:after {
+    content: " \20AC";
+}
+
+div.produit div.controle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 4px 7px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #f7faf8;
+    box-shadow: none;
+}
+
+div.controle button,
+div.controle input {
+    margin: 0;
+}
+
+input#filter {
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 11px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fbfcfb;
+    color: var(--ink);
+    font: inherit;
+}
+
+input#filter:focus,
+input[type="number"]:focus {
+    outline: 2px solid #91b9aa;
+    outline-offset: 2px;
+}
+
+#total {
+    margin: 12px 0;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+}
+
+div.achats {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+    padding: 5px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+.achat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    height: auto;
+    margin: 0;
+    padding: 5px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.achat h4 {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    height: auto;
+    color: var(--ink);
+    font-size: 11px;
+}
+
+.achat .prix,
+.achat .quantite {
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.achat figure {
+    flex: 0 0 32px;
+    margin: 0;
+}
+
+.achat div.controle {
+    flex: 0 0 22px;
+    overflow: hidden;
+}
+
+button.commander,
+button.retirer {
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.commander:focus-visible,
+button.retirer:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+button.commander:disabled {
+    cursor: not-allowed;
+}
+
+button.retirer {
+    padding: 0;
+    overflow: hidden;
+    color: transparent;
+    font-size: 0;
+    line-height: 0;
+    white-space: nowrap;
+}
+
+@media (max-width: 1050px) {
+    body {
+        grid-template-columns: minmax(0, 1fr) 270px;
+    }
+
+    div#boutique {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "title"
+            "shop"
+            "cart";
+        width: min(100% - 24px, 560px);
+        margin: 18px auto;
+        gap: 14px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    div#boutique {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        height: auto;
+        min-height: 0;
+        max-height: none;
+    }
+
+    div#panier {
+        height: 360px;
+        min-height: 360px;
+    }
+}
+
+@media (max-width: 420px) {
+    div#boutique {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
